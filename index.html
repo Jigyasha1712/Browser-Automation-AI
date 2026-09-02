@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAgent AI — Autonomous Agentic Web Browser Automation Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #070913; color: #F1F5F9; min-height: 100vh; }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.08); }
+        .agent-gradient { background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%); }
+        .agent-text { background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="selection:bg-indigo-500 selection:text-white">
+    <header class="glass sticky top-0 z-50 border-b border-white/10 px-6 py-3.5 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl agent-gradient flex items-center justify-center text-white text-lg shadow-lg shadow-indigo-500/25">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+            <div>
+                <span class="font-extrabold text-white text-lg tracking-tight">Web<span class="agent-text">Agent</span> AI</span>
+                <p class="text-[11px] text-slate-400">Autonomous Browser Automation with LangChain, Groq & Browser-Use</p>
+            </div>
+        </div>
+        <a href="https://github.com/Jigyasha1712/Browser-Automation-AI" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white border border-slate-700 transition flex items-center space-x-2">
+            <i class="fa-brands fa-github"></i><span>GitHub Repo</span>
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
+        <div class="glass p-6 rounded-2xl relative overflow-hidden">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">Autonomous <span class="agent-text">Browser-Use</span> AI Studio</h1>
+            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl">Give your AI agent a natural language instruction and watch it interactively navigate websites, click elements, extract datasets, and solve multi-step web workflows autonomously.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Controls: 5 Cols -->
+            <div class="lg:col-span-5 glass p-5 rounded-2xl space-y-4">
+                <h3 class="font-bold text-white text-sm border-b border-white/10 pb-3">Agent Mission Directive</h3>
+                
+                <div>
+                    <label class="block text-slate-400 text-xs mb-1 font-mono">Target LLM Reasoning Engine:</label>
+                    <select class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                        <option>Groq / Llama-3-70B (Ultra Low Latency)</option>
+                        <option>OpenAI GPT-4o (Vision Enhanced)</option>
+                        <option>Claude 3.5 Sonnet (Deep Reasoning)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 text-xs mb-1 font-mono">Instruction Prompt:</label>
+                    <textarea id="mission-prompt" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500 font-sans leading-relaxed">Go to Google, search for "top 5 tech news today", click on the first link, and summarize the key headlines.</textarea>
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-400 block mb-1.5 font-mono">Quick Preset Missions:</label>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <button onclick="loadMission(1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 text-slate-200">
+                            <span class="font-bold block text-[11px]">E-Commerce Scout</span>
+                            <span class="text-[9px] text-indigo-400">Price extraction</span>
+                        </button>
+                        <button onclick="loadMission(2)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 text-slate-200">
+                            <span class="font-bold block text-[11px]">Lead Research</span>
+                            <span class="text-[9px] text-cyan-400">Directory scraping</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="runMission()" class="w-full py-2.5 rounded-xl agent-gradient hover:opacity-95 text-white font-bold text-xs shadow-lg shadow-indigo-500/25 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-play"></i>
+                    <span>Execute Autonomous Web Agent</span>
+                </button>
+            </div>
+
+            <!-- Right Execution Canvas: 7 Cols -->
+            <div class="lg:col-span-7 glass p-5 rounded-2xl space-y-4 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                        <h3 class="font-bold text-white text-sm">Agent Live Execution Trace</h3>
+                        <span id="agent-status" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/40">
+                            MISSION COMPLETED
+                        </span>
+                    </div>
+
+                    <div id="steps-container" class="space-y-2.5 my-4 font-mono text-xs">
+                        <!-- Steps populated by JS -->
+                    </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between text-xs">
+                    <span class="text-slate-300 font-mono text-[11px]"><i class="fa-solid fa-clock-rotate-left mr-1.5 text-indigo-400"></i>Agent Execution Latency: <span class="text-emerald-400 font-bold">1.84s</span></span>
+                    <span class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 text-[10px] font-mono">Zero Human In Loop</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const mission1 = [
+            { step: "01", action: "Navigate", desc: "Launched headless Chromium and opened target URL", status: "200 OK" },
+            { step: "02", action: "Locate DOM", desc: "Identified search input `#query-input` using accessibility tree", status: "Found" },
+            { step: "03", action: "Input Text", desc: "Typed target query and emitted Enter keydown event", status: "Executed" },
+            { step: "04", action: "Extract", desc: "Parsed product cards: 'Sony WH-1000XM5: $348.00 (4.7 Stars)'", status: "Captured" }
+        ];
+
+        function renderSteps() {
+            const c = document.getElementById('steps-container');
+            c.innerHTML = mission1.map(s => `
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-6 h-6 rounded-lg bg-indigo-950 text-indigo-400 flex items-center justify-center font-bold text-[10px] border border-indigo-700/40">${s.step}</span>
+                        <div>
+                            <span class="text-white font-bold block">${s.action}</span>
+                            <span class="text-slate-400 text-[11px] font-sans">${s.desc}</span>
+                        </div>
+                    </div>
+                    <span class="px-2 py-0.5 rounded bg-slate-800 text-emerald-400 text-[10px] font-bold">${s.status}</span>
+                </div>
+            `).join('');
+        }
+
+        function loadMission(id) {
+            if (id === 1) {
+                document.getElementById('mission-prompt').value = "Go to Amazon, search for noise-cancelling headphones, and extract top 3 rated models.";
+            } else {
+                document.getElementById('mission-prompt').value = "Navigate to Y-Combinator startup directory, filter by AI batch 2026, and export company names.";
+            }
+            renderSteps();
+        }
+
+        function runMission() {
+            renderSteps();
+        }
+
+        window.onload = renderSteps;
+    </script>
+</body>
+</html>
