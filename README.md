@@ -1,4 +1,4 @@
-# 🤖 Autonomous AI Web Agent (Browser-Use & LangChain)
+# Autonomous AI Web (Browser-Use & LangChain)
 
 An autonomous agent framework capable of navigating dynamic web applications, authenticating, filling forms, and validating complex visual UI states using LLMs (OpenAI & Groq / LLaMA-3).
 
